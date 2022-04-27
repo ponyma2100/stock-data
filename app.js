@@ -9,14 +9,25 @@ const BASE_URL = 'https://tw.stock.yahoo.com/_td-stock/api/resource/StockService
 const OTC_URL = 'https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.rank;exchange=TWO;limit=100;offset=0;period=1D;sortBy=-volume'
 
 
-
-app.get('/volumestocks', async (req, res) => {
+// get volume100 stocks
+app.get('/api/volumestocks', async (req, res) => {
   let stockList = []
   const response = await fetch(`${BASE_URL}`)
   const data = await response.json()
   stockList = await data.list
 
   res.send(stockList)
+})
+
+// get volume100 otc stocks
+app.get('/api/volumeotcstocks', async (req, res) => {
+  let otcStockList = []
+  const response = await fetch(`${OTC_URL
+    }`)
+  const data = await response.json()
+  otcStockList = await data.list
+
+  res.send(otcStockList)
 })
 
 app.listen(port, () => {
