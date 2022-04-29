@@ -41,11 +41,31 @@ app.get('/api/stockinfo/:symbol', async (req, res) => {
   let symbol = req.params.symbol
   let stockInfo = []
   let STOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}.TW`
-  const response = await fetch(STOCK_URL)
-  stockInfo = await response.json()
 
+  try {
+    const response = await fetch(STOCK_URL)
+    stockInfo = await response.json()
+  } catch (error) {
+    console.log(error)
+  }
 
   res.send(stockInfo)
+})
+
+// get otc stock info
+app.get('/api/otcinfo/:symbol', async (req, res) => {
+  let symbol = req.params.symbol
+  let otcStockInfo = []
+  let OTCSTOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}.TWO`
+
+  try {
+    const response = await fetch(OTCSTOCK_URL)
+    otcStockInfo = await response.json()
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.send(otcStockInfo)
 })
 
 app.listen(PORT, () => {
