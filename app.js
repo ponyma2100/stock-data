@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 const fetch = require('node-fetch');
+const cors = require('cors')
 
-
+app.use(cors())
 
 const BASE_URL = 'https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.rank;exchange=TAI;limit=100;offset=0;period=1D;sortBy=-volume'
 const OTC_URL = 'https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.rank;exchange=TWO;limit=100;offset=0;period=1D;sortBy=-volume'
@@ -19,6 +20,10 @@ app.get('/api/volumestocks', async (req, res) => {
   res.send(stockList)
 })
 
+app.get('/', (req, res) => {
+  res.send('HELLLLOOOO')
+})
+
 // get volume100 otc stocks
 app.get('/api/volumeotcstocks', async (req, res) => {
   let otcStockList = []
@@ -30,6 +35,6 @@ app.get('/api/volumeotcstocks', async (req, res) => {
   res.send(otcStockList)
 })
 
-app.listen(port, () => {
-  console.log(`Express is running on http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`Express is running on http://localhost:${PORT}`)
 })
