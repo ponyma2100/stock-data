@@ -44,7 +44,8 @@ app.get('/api/stockinfo/:symbol', async (req, res) => {
 
   try {
     const response = await fetch(STOCK_URL)
-    stockInfo = await response.json()
+    const data = await response.json()
+    stockInfo = data[0]
   } catch (error) {
     console.log(error)
   }
@@ -60,7 +61,8 @@ app.get('/api/otcinfo/:symbol', async (req, res) => {
 
   try {
     const response = await fetch(OTCSTOCK_URL)
-    otcStockInfo = await response.json()
+    const data = await response.json()
+    otcStockInfo = data[0]
   } catch (error) {
     console.log(error)
   }
