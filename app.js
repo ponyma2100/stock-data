@@ -40,7 +40,7 @@ app.get('/api/volumeotcstocks', async (req, res) => {
 app.get('/api/stockinfo/:symbol', async (req, res) => {
   let symbol = req.params.symbol
   let stockInfo = []
-  let STOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}.TW`
+  let STOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}`
 
   try {
     const response = await fetch(STOCK_URL)
@@ -56,7 +56,7 @@ app.get('/api/stockinfo/:symbol', async (req, res) => {
 app.get('/api/otcinfo/:symbol', async (req, res) => {
   let symbol = req.params.symbol
   let otcStockInfo = []
-  let OTCSTOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}.TWO`
+  let OTCSTOCK_URL = `https://tw.stock.yahoo.com/_td-stock/api/resource/StockServices.stockList;fields=avgPrice%2Corderbook;symbols=${symbol}`
 
   try {
     const response = await fetch(OTCSTOCK_URL)
