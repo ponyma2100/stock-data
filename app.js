@@ -70,6 +70,26 @@ app.get('/api/otcinfo/:symbol', async (req, res) => {
   res.send(otcStockInfo)
 })
 
+// get quote data
+app.get('/api/quote/:symbol', async (req, res) => {
+  let symbol = req.params.symbol
+  let QUOTE_URL = `https://tw.quote.finance.yahoo.net/quote/q?type=tick&perd=1m&sym=${symbol}`
+  let quote = []
+
+  try {
+    const response = await fetch(QUOTE_URL)
+    const str = await response.text()
+    const newStr = str.slice(5, -2)
+
+    quote = JSON.parse(newStr)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.send(quote.tick)
+})
+
 app.listen(PORT, () => {
   console.log(`Express is running on http://localhost:${PORT}`)
 })
