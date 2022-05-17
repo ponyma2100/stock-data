@@ -90,6 +90,50 @@ app.get('/api/quote/:symbol', async (req, res) => {
   res.send(quote.tick)
 })
 
+
+
+app.get('/api/symbollist', async (req, res) => {
+  let symbolList = []
+  try {
+    // 上市
+    const res_twse = await fetch('https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL')
+    // 上櫃
+    const res_tpex = await fetch('https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes')
+
+    const data_twse = await res_twse.json()
+    const data_tpex = await res_tpex.json()
+
+    let arr_twse = data_twse.map(stock => {
+      let obj_twse = {
+        id: stock.Code,
+        symbol: stock.Code + '.TW',
+        name: stock.Name,
+      }
+      return obj_twse
+    })
+
+    let arr_tpex = data_tpex.map(stock => {
+      let obj_tpex = {
+        id: stock.SecuritiesCompanyCode,
+        symbol: stock.SecuritiesCompanyCode + '.TWO',
+        name: stock.CompanyName,
+      }
+
+      return obj_tpex
+    })
+
+    symbolList = arr_twse.concat(arr_tpex)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.send(symbolList)
+})
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Express is running on http://localhost:${PORT}`)
 })
